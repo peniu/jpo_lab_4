@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 
 public class Vector2D {
-    public double wspX, wspY;
+    private double wspX, wspY;
     public double getWspX() {
         return wspX;
     }
@@ -56,16 +56,13 @@ public class Vector2D {
         System.out.println("x= "+getWspX());
         System.out.println("y= "+getWspY());
     }
-    public String info(int a){
-        return ("x= "+getWspX()+"\n y= "+getWspY());
-    }
     public void rysowanieWektora(double x,double y,Graphics g) {
         //x, y - miejsce poczatku wektora (w ukl wspolrzednych)
         Graphics2D g2 = (Graphics2D) g;
         //rysowanie linii wektora
         g2.draw(new Line2D.Double(x,y,x+getWspX(),y-getWspY()));
         //rysowanie grota wektora
-        Vector2D normalny = norm();
+        /*Vector2D normalny = norm();
         double a = x + getWspX() - 6 * normalny.getWspX();
         double b = y - getWspY() + 6 * normalny.getWspY();
         Vector2D obrot = new Vector2D();
@@ -73,7 +70,7 @@ public class Vector2D {
         obrot.setWspX(-normalny.getWspY());
         obrot.setWspY(normalny.getWspX());
         //przygotowuje wspolrzedne trojkata sluzacego jako grot
-        /*int x1 = (int) Math.round(a + 4 * obrot.getWspX());
+        int x1 = (int) Math.round(a + 4 * obrot.getWspX());
         int x2 = (int) Math.round(a - 4 * obrot.getWspX());
         int y1 = (int) Math.round(b - 4 * obrot.getWspY());
         int y2 = (int) Math.round(b + 4 * obrot.getWspY());

@@ -7,10 +7,10 @@ public class SpringApplet extends JApplet{
     private SimTask task;
     private Timer timer;
     public void init() {
-        this.engine = new SimEngine(2, 10, 0.3, 100, 10, 300, 150, 0, 0, 300, 50);
-        this.task = new SimTask(engine, this, 0.1);
+        this.engine = new SimEngine(1, 4, 0.1, 200, 9.81,new Vector2D(600,300),new Vector2D(0,0),new Vector2D(400,50));
+        this.task = new SimTask(engine, this, 1);
         this.timer = new Timer();
-        this.timer.scheduleAtFixedRate(task,1000,100);
+        this.timer.scheduleAtFixedRate(task,1000,10);
     }
     public void paint(Graphics g) {
         setSize(800,600);
@@ -19,13 +19,9 @@ public class SpringApplet extends JApplet{
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.clearRect(0,0,getWidth(),getHeight());
         g2.setPaint(Color.black);
-        //ustawienie poczatku rysowania w pkt zawieszenia
-        double x0=engine.getZawX();
-        double y0=engine.getZawY();
-        //ustalenie wektora liny
-        Vector2D lina = new Vector2D(engine.getWspXM()+engine.getZawX(),engine.getWspYM()+engine.getZawY());
-        lina.rysowanieWektora(x0,y0,g2);
-        //rysowanie owalu symbolizujacego mase
-        g2.fillOval((int)engine.getWspXM(),(int)engine.getWspYM(),10,10);
+        Vector2D x = engine.getxM();
+        Vector2D zaw = engine.getZaw();
+        g2.drawLine((int)zaw.getWspX(),(int)zaw.getWspY(),(int)x.getWspX(),(int)x.getWspY());
+        g2.fillOval((int)x.getWspX(),(int)x.getWspY(),10,10);
     }
 }
