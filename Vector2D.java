@@ -83,5 +83,4 @@ public class Vector2D {
     }
     public static void main (String[] args){
     }
-
 }

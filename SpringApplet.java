@@ -20,7 +20,6 @@ public class SpringApplet extends JApplet {
             g2.draw(new Line2D.Double(0, i, 800, i));
         }
     }
-
     //rysowanie oznaczenia utwierdzenia
     public void utwierdzenie(Graphics g, Vector2D zaw) {
         Graphics2D g2 = (Graphics2D) g;
@@ -30,7 +29,6 @@ public class SpringApplet extends JApplet {
             g2.draw(new Line2D.Double(i, zaw.getWspY(), i + 10, zaw.getWspY() - 10));
         }
     }
-
     //rysowanie sprezyny
     public void sprezyna(Graphics2D g, Vector2D zaw, Vector2D x) {
         Graphics2D g2 = (Graphics2D) g;
@@ -70,9 +68,8 @@ public class SpringApplet extends JApplet {
         this.engine = new SimEngine(20, 3, 0.3, 200, 9.81, new Vector2D(600, 300), new Vector2D(0, 0), new Vector2D(400, 50));
         this.task = new SimTask(engine, this, 0.1);
         this.timer = new Timer();
-        this.timer.scheduleAtFixedRate(task, 1000, 10);
+        this.timer.scheduleAtFixedRate(task, 100, 10);
     }
-
     public void paint(Graphics g) {
         setSize(800, 600);
         setBackground(Color.white);

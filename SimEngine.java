@@ -29,11 +29,11 @@ public class SimEngine {
     public Vector2D getFsprez(){return Fsprez;}
     public Vector2D getFwyp(){return Fwyp;}
     public void setC(double c) {
-        if(c>0){
+        if(c>=0){
             this.c = c;
         }
         else{
-            this.c=1;
+            this.c=0.1;
         }
     }
     public void setG(double g) {
