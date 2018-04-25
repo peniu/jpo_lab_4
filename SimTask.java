@@ -4,14 +4,14 @@ public class SimTask extends TimerTask {
     private SimEngine engine;
     private SpringApplet applet;
     private double time;
+    //konstruktor
     public SimTask(SimEngine eng,SpringApplet app,double t){
         this.engine=eng;
         this.applet=app;
         this.time=t;
     }
+    //metoda uruchamiajaca symulacje i odswiezajaca powierzchnie appletu
     public void run(){
-        //uruchomienie obliczenia kolejnego kroku symulacji
-        //odswiezenie powierzchni appletu
         engine.sim(time);
         applet.repaint();
     }

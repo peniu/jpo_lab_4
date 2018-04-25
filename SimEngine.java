@@ -3,6 +3,8 @@ public class SimEngine {
     private double masa,k,c,L0,g;
     //wektory polozenia i predkosci masy i polozenia pkt zawieszenia
     private Vector2D xM,vM,zaw;
+    //wektory sil
+    private Vector2D Fgraw,Fwisk,Fsprez,Fwyp;
     //akcesory
     public double getC() {
         return c;
@@ -22,6 +24,10 @@ public class SimEngine {
     public Vector2D getxM(){return xM;}
     public Vector2D getvM(){return vM;}
     public Vector2D getZaw(){return zaw;}
+    public Vector2D getFgraw(){return Fgraw;}
+    public Vector2D getFwisk(){return Fwisk;}
+    public Vector2D getFsprez(){return Fsprez;}
+    public Vector2D getFwyp(){return Fwyp;}
     public void setC(double c) {
         if(c>0){
             this.c = c;
@@ -82,33 +88,31 @@ public class SimEngine {
         setvM(v);
         setZaw(z);
     }
-    //metoda symulujaca ruch masy
+    //metoda obliczajaca przebieg symulacji
     public void sim(double time){
-        Vector2D oldX=xM;
         //wektory sil grawitacji i tlumienia
-        Vector2D Fgraw = new Vector2D(0,getMasa()*getG());
-        Vector2D Fwisk = vM.iloczyn(-getC());
+        this.Fgraw = new Vector2D(0,getMasa()*getG());
+        this.Fwisk = vM.iloczyn(-getC());
         Vector2D sprezyna = new Vector2D(xM.getWspX()-zaw.getWspX(),xM.getWspY()-zaw.getWspY());
         double L=sprezyna.dlugosc();
         Vector2D kier_sprez=sprezyna.norm();
         //wektor sily sprezystosci (kierunek wzdluz sprezyny)
-        Vector2D Fsprez = kier_sprez.iloczyn(getK()*(getL0()-L));
-        Vector2D wyp1 = Fsprez.suma(Fwisk);
+        this.Fsprez = kier_sprez.iloczyn(getK()*(getL0()-L));
         //sila wypadkowa
-        Vector2D Fwyp = wyp1.suma(Fgraw);
+        this.Fwyp = Fsprez.suma(Fgraw).suma(Fwisk);
         //przyspieszenie wypadkowe
         Vector2D a = Fwyp.iloczyn(1/getMasa());
-        //this.vM = vM.suma(a.iloczyn(time));
-        this.xM = xM.suma(a.iloczyn(time*time/2));
-        this.vM = oldX.roznica(xM).iloczyn(1/time);
-        System.out.println("pyk");
-        //Fwisk.info();
-        Fsprez.info();
-        Fwyp.info();
-        vM.info();
+        //zmiana predkosci
+        Vector2D dv = a.iloczyn(time);
+        //nowa predkosc
+        vM = vM.suma(dv);
+        //zmiana polozenia
+        Vector2D dx = vM.iloczyn(time);
+        //nowe polozenie
+        xM = xM.suma(dx);
     }
+    //metoda zerujaca predkosc masy
     public void reset(){
-        //zerowanie predkosci masy
         this.vM=new Vector2D(0,0);
     }
     public static void main(String[] args){
